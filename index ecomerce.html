@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>AnimePets - Comida para Mascotas con Estilo Anime</title>
+
+    <!-- Font Awesome (íconos modernos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Variables de colores anime - Modificado a azules pastel */
+        :root {
+            --primary-blue: #A7C7E7;  /* Azul pastel principal */
+            --secondary-blue: #B6D0E2; /* Azul pastel secundario */
+            --accent-blue: #C8E0F4;    /* Azul acento más claro */
+            --light-blue: #DAEAF1;     /* Azul muy claro para fondos */
+            --dark-blue: #6B8EAF;      /* Azul más oscuro para texto */
+            --card-bg: #FFFFFF;
+            --light-bg: #F0F8FF;       /* Fondo azul muy claro */
+        }
+
+        * { 
+            margin:0; 
+            padding:0; 
+            box-sizing:border-box; 
+        }
+        
+        body { 
+            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            line-height:1.6; 
+            color:var(--dark-blue); 
+            background-color:var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        /* Animaciones personalizadas */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity:0; transform:translateY(30px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes sparkle {
+            0% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+            100% { opacity: 0; transform: scale(0) rotate(360deg); }
+        }
+
+        /* Estilos generales */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--dark-blue);
+            position: relative;
+            display: block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 2px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: white;
+            box-shadow: 0 4px 15px rgba(167, 199, 231, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(167, 199, 231, 0.6);
+            animation: pulse 1s infinite;
+        }
+
+        .btn-secondary {
+            background: var(--secondary-blue);
+            color: white;
+        }
+
+        /* Header con estilo anime */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: var(--dark-blue);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-blue);
+            text-shadow: 2px 2px 0px var(--secondary-blue);
+        }
+
+        .logo i {
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--dark-blue);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: 600;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-blue);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--secondary-blue);
+            border-radius: 30px;
+            width: 200px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(167, 199, 231, 0.3);
+        }
+
+        .cart-icon {
+            background: var(--primary-blue);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            position: relative;
+            color: white;
+            box-shadow: 0 4px 10px rgba(167, 199, 231, 0.4);
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+            background: var(--accent-blue);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--secondary-blue);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: var(--primary-blue);
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section con estilo anime */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><defs><pattern id="gift" patternUnits="userSpaceOnUse" width="10" height="10"><path d="M0,0 L10,0 L10,10 L0,10 Z" fill="none" stroke="white" stroke-width="0.5"/><circle cx="5" cy="5" r="2" fill="white"/></pattern></defs><rect width="100" height="100" fill="url(%23gift)"/></svg>');
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        .floating-element:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; color: var(--accent-blue); }
+        .floating-element:nth-child(2) { top: 60%; left: 85%; animation-delay: 1s; color: var(--light-blue); }
+        .floating-element:nth-child(3) { top: 40%; left: 75%; animation-delay: 2s; color: var(--secondary-blue); }
+        .floating-element:nth-child(4) { top: 80%; left: 15%; animation-delay: 3s; color: var(--accent-blue); }
+        .floating-element:nth-child(5) { top: 30%; left: 50%; animation-delay: 4s; color: var(--light-blue); }
+
+        /* Sección de categorías */
+        .categories {
+            padding: 5rem 0;
+            background: var(--light-bg);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+        }
+
+        .category-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Sección de productos destacados */
+        .featured-products {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary-blue);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .product-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><defs><pattern id="stars" patternUnits="userSpaceOnUse" width="20" height="20"><circle cx="10" cy="10" r="1" fill="white"/><circle cx="3" cy="3" r="0.5" fill="white"/><circle cx="17" cy="17" r="0.5" fill="white"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
+        }
+
+        .product-image i {
+            font-size: 4rem;
+            color: white;
+            z-index: 1;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin: 0.5rem 0;
+        }
+
+        .product-rating {
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+        }
+
+        .add-to-cart {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart:hover {
+            background: var(--accent-blue);
+            transform: scale(1.05);
+        }
+
+        /* Sección de ofertas especiales */
+        .special-offers {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--light-blue) 100%);
+            text-align: center;
+            color: var(--dark-blue);
+        }
+
+        .offer-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        .offer-card h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .countdown-item {
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            min-width: 70px;
+        }
+
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Sección de testimonios */
+        .testimonials {
+            padding: 5rem 0;
+            background: var(--light-bg);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            font-size: 5rem;
+            color: var(--primary-blue);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 50%;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modal del carrito */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 380px;
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 2000;
+            transition: right 0.3s ease;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .cart-modal.active {
+            right: 0;
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .cart-overlay.active {
+            display: block;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-bg);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-blue);
+        }
+
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light-bg);
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+        }
+
+        .cart-item-price {
+            color: var(--primary-blue);
+            font-weight: bold;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cart-item-controls button {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: var(--dark-blue);
+            cursor: pointer;
+            opacity: 0.7;
+            margin-left: 0.5rem;
+        }
+
+        .cart-item-remove:hover {
+            opacity: 1;
+            color: var(--secondary-blue);
+        }
+
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-align: right;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-blue));
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(167, 199, 231, 0.4);
+        }
+
+        /* Notificaciones */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--primary-blue);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s forwards;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .header-actions {
+                gap: 0.5rem;
+            }
+            
+            .search-box {
+                width: 150px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cart-modal {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .countdown {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--accent-blue), var(--light-blue));
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo"><i class="fa-solid fa-paw"></i> AnimePets</div>
+                <ul class="nav-menu">
+                    <li><a href="#home">Inicio</a></li>
+                    <li><a href="#categories">Categorías</a></li>
+                    <li><a href="#products">Productos</a></li>
+                    <li><a href="#offers">Ofertas</a></li>
+                    <li><a href="#testimonials">Testimonios</a></li>
+                </ul>
+                <div class="header-actions">
+                    <input type="search" class="search-box" placeholder="Buscar productos...">
+                    <div class="cart-icon" onclick="toggleCart()">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="cart-count">0</span>
+                    </div>
+                    <div class="mobile-menu">☰</div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <div class="floating-element"><i class="fa-solid fa-bone"></i></div>
+            <div class="floating-element"><i class="fa-solid fa-fish"></i></div>
+            <div class="floating-element"><i class="fa-solid fa-paw"></i></div>
+            <div class="floating-element"><i class="fa-solid fa-cat"></i></div>
+            <div class="floating-element"><i class="fa-solid fa-heart"></i></div>
+        </div>
+        <div class="hero-content">
+            <h1>¡Comida para Mascotas con Estilo Anime!</h1>
+            <p>Descubre nuestros productos kawaii que harán feliz a tu mascota</p>
+            <button class="btn btn-primary" onclick="scrollToSection('categories')">Explorar Productos</button>
+        </div>
+    </section>
+
+    <!-- Sección de Categorías -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2 class="section-title">Nuestras Categorías</h2>
+            <div class="categories-grid">
+                <div class="category-card" onclick="filterProducts('perros')">
+                    <div class="category-icon"><i class="fa-solid fa-dog"></i></div>
+                    <h3>Comida para Perros</h3>
+                    <p>Deliciosa y nutritiva comida para tu mejor amigo</p>
+                </div>
+                <div class="category-card" onclick="filterProducts('gatos')">
+                    <div class="category-icon"><i class="fa-solid fa-cat"></i></div>
+                    <h3>Comida para Gatos</h3>
+                    <p>Alimentos que harán purr de felicidad a tu minino</p>
+                </div>
+                <div class="category-card" onclick="filterProducts('aves')">
+                    <div class="category-icon"><i class="fa-solid fa-dove"></i></div>
+                    <h3>Comida para Aves</h3>
+                    <p>Nutritivas semillas y alimentos para tus pájaros</p>
+                </div>
+                <div class="category-card" onclick="filterProducts('roedores')">
+                    <div class="category-icon"><i class="fa-solid fa-otter"></i></div>
+                    <h3>Comida para Roedores</h3>
+                    <p>Alimentos balanceados para tus pequeños amigos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Productos Destacados -->
+    <section class="featured-products" id="products">
+        <div class="container">
+            <h2 class="section-title">Productos Destacados</h2>
+            <div class="products-grid">
+                <!-- Producto 1 -->
+                <div class="product-card">
+                    <div class="product-badge">Nuevo</div>
+                    <div class="product-image">
+                        <i class="fa-solid fa-bone"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3>Croquetas Premium para Perros</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="product-price">$24.99</p>
+                        <p>Alimento balanceado con sabor a pollo y vegetales</p>
+                        <button class="add-to-cart" onclick="addToCart('Croquetas Premium para Perros', 24.99, 'perros')">
+                            <i class="fas fa-cart-plus"></i> Añadir al Carrito
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="product-card">
+                    <div class="product-badge">Oferta</div>
+                    <div class="product-image">
+                        <i class="fa-solid fa-cat"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3>Comida Húmeda para Gatos</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        <p class="product-price">$18.99</p>
+                        <p>Sabor a pescado y atún, con vitaminas esenciales</p>
+                        <button class="add-to-cart" onclick="addToCart('Comida Húmeda para Gatos', 18.99, 'gatos')">
+                            <i class="fas fa-cart-plus"></i> Añadir al Carrito
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fa-solid fa-dove"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3>Mezcla de Semillas para Aves</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="product-price">$12.99</p>
+                        <p>Mezcla nutritiva para canarios, periquitos y más</p>
+                        <button class="add-to-cart" onclick="addToCart('Mezcla de Semillas para Aves', 12.99, 'aves')">
+                            <i class="fas fa-cart-plus"></i> Añadir al Carrito
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="product-card">
+                    <div class="product-badge">Más Vendido</div>
+                    <div class="product-image">
+                        <i class="fa-solid fa-otter"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3>Alimento para Hámsters y Conejos</h3>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="product-price">$14.99</p>
+                        <p>Completa nutrición para roedores pequeños</p>
+                        <button class="add-to-cart" onclick="addToCart('Alimento para Hámsters y Conejos', 14.99, 'roedores')">
+                            <i class="fas fa-cart-plus"></i> Añadir al Carrito
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Ofertas Especiales -->
+    <section class="special-offers" id="offers">
+        <div class="container">
+            <h2 class="section-title">Ofertas Especiales</h2>
+            <div class="offer-card">
+                <h3>¡Descuento del 20% en tu primera compra!</h3>
+                <p>Usa el código: <strong>ANIMEPETS20</strong></p>
+                <p>Válido hasta:</p>
+                <div class="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">00</div>
+                        <div>Días</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">00</div>
+                        <div>Horas</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">00</div>
+                        <div>Minutos</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">00</div>
+                        <div>Segundos</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="scrollToSection('products')">Aprovechar Oferta</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Testimonios -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "A mi gato Sakura le encanta la comida de AnimePets. ¡Es la única que come sin quejarse! Los diseños kawaii de los empaques son un plus."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <h4>Marta Rodríguez</h4>
+                            <p>Dueña de Sakura (gata)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Desde que compro el alimento para mi perro Totoro en AnimePets, tiene más energía y su pelaje está más brillante. ¡100% recomendado!"
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <h4>Carlos Méndez</h4>
+                            <p>Dueño de Totoro (perro)</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-text">
+                        "Mis canarios Pikachu y Eevee están más felices que nunca con las semillas de AnimePets. El servicio al cliente es excelente y rápido."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div>
+                            <h4>Ana López</h4>
+                            <p>Dueña de Pikachu y Eevee (canarios)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AnimePets</h3>
+                    <p>Tu tienda de confianza para alimentos de mascotas con estilo anime. Calidad y kawaii en un solo lugar.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Inicio</a></li>
+                        <li><a href="#categories">Categorías</a></li>
+                        <li><a href="#products">Productos</a></li>
+                        <li><a href="#offers">Ofertas</a></li>
+                        <li><a href="#testimonials">Testimonios</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Calle Anime 123, Kawaii City</li>
+                        <li><i class="fas fa-phone"></i> +57 316 633 6246</li>
+                        <li><i class="fas fa-envelope"></i> andresdaviddelgado@animemypets.com</li>
+                        <li><i class="fas fa-user"></i> Andres David Delgado</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 AnimePets. Todos los derechos reservados. | Andres David Delgado</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal del Carrito -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3>Tu Carrito de Compras</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Los elementos del carrito se añadirán aquí dinámicamente -->
+        </div>
+        <div class="cart-total">
+            Total: $<span id="cartTotal">0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="checkout()">Proceder al Pago</button>
+    </div>
+
+    <script>
+        // Variables globales
+        let cart = [];
+        let cartCount = 0;
+        let cartTotal = 0;
+
+        // Inicialización cuando el DOM está listo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar el contador de oferta
+            setupCountdown();
+            
+            // Configurar el efecto de scroll en el header
+            window.addEventListener('scroll', handleScroll);
+            
+            // Cargar carrito desde localStorage si existe
+            loadCartFromStorage();
+            
+            // Actualizar la visualización del carrito
+            updateCartDisplay();
+        });
+
+        // Función para manejar el scroll y cambiar el header
+        function handleScroll() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }
+
+        // Función para desplazarse suavemente a una sección
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Función para alternar la visualización del carrito
+        function toggleCart() {
+            const cartModal = document.getElementById('cartModal');
+            const cartOverlay = document.getElementById('cartOverlay');
+            
+            cartModal.classList.toggle('active');
+            cartOverlay.classList.toggle('active');
+        }
+
+        // Función para añadir productos al carrito
+        function addToCart(productName, price, category) {
+            // Crear un ID único para el producto
+            const productId = productName.replace(/\s+/g, '-').toLowerCase();
+            
+            // Verificar si el producto ya está en el carrito
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: productName,
+                    price: price,
+                    category: category,
+                    quantity: 1
+                });
+            }
+            
+            // Actualizar contadores
+            cartCount += 1;
+            cartTotal += price;
+            
+            // Guardar en localStorage
+            saveCartToStorage();
+            
+            // Actualizar la visualización
+            updateCartDisplay();
+            
+            // Mostrar notificación
+            showNotification(`${productName} añadido al carrito`);
+        }
+
+        // Función para eliminar un producto del carrito
+        function removeFromCart(productId) {
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            
+            if (itemIndex !== -1) {
+                const item = cart[itemIndex];
+                cartCount -= item.quantity;
+                cartTotal -= item.price * item.quantity;
+                
+                cart.splice(itemIndex, 1);
+                
+                // Guardar en localStorage
+                saveCartToStorage();
+                
+                // Actualizar la visualización
+                updateCartDisplay();
+                
+                // Mostrar notificación
+                showNotification('Producto eliminado del carrito');
+            }
+        }
+
+        // Función para actualizar la cantidad de un producto en el carrito
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            
+            if (item) {
+                if (change > 0) {
+                    item.quantity += 1;
+                    cartCount += 1;
+                    cartTotal += item.price;
+                } else if (change < 0 && item.quantity > 1) {
+                    item.quantity -= 1;
+                    cartCount -= 1;
+                    cartTotal -= item.price;
+                }
+                
+                // Guardar en localStorage
+                saveCartToStorage();
+                
+                // Actualizar la visualización
+                updateCartDisplay();
+            }
+        }
+
+        // Función para actualizar la visualización del carrito
+        function updateCartDisplay() {
+            // Actualizar el contador del icono del carrito
+            const cartCountElement = document.querySelector('.cart-count');
+            cartCountElement.textContent = cartCount;
+            
+            // Actualizar la lista de productos en el modal del carrito
+            const cartItemsElement = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItemsElement.innerHTML = '<p>Tu carrito está vacío</p>';
+            } else {
+                cartItemsElement.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-image">
+                            <i class="fa-solid fa-${getIconByCategory(item.category)}"></i>
+                        </div>
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">$${item.price} x ${item.quantity}</div>
+                        </div>
+                        <div class="cart-item-controls">
+                            <button onclick="updateQuantity('${item.id}', -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateQuantity('${item.id}', 1)">+</button>
+                            <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Actualizar el total
+            cartTotalElement.textContent = cartTotal.toFixed(2);
+        }
+
+        // Función para obtener el icono según la categoría
+        function getIconByCategory(category) {
+            switch(category) {
+                case 'perros': return 'dog';
+                case 'gatos': return 'cat';
+                case 'aves': return 'dove';
+                case 'roedores': return 'otter';
+                default: return 'paw';
+            }
+        }
+
+        // Función para mostrar notificaciones
+        function showNotification(message) {
+            // Eliminar notificación anterior si existe
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            // Crear nueva notificación
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Eliminar la notificación después de 3 segundos
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        // Función para guardar el carrito en localStorage
+        function saveCartToStorage() {
+            localStorage.setItem('animePetsCart', JSON.stringify(cart));
+            localStorage.setItem('animePetsCartCount', cartCount.toString());
+            localStorage.setItem('animePetsCartTotal', cartTotal.toString());
+        }
+
+        // Función para cargar el carrito desde localStorage
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('animePetsCart');
+            const savedCount = localStorage.getItem('animePetsCartCount');
+            const savedTotal = localStorage.getItem('animePetsCartTotal');
+            
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                cartCount = savedCount ? parseInt(savedCount) : 0;
+                cartTotal = savedTotal ? parseFloat(savedTotal) : 0;
+            }
+        }
+
+        // Función para configurar el contador de oferta
+        function setupCountdown() {
+            // Establecer la fecha de finalización (3 días desde ahora)
+            const countDownDate = new Date();
+            countDownDate.setDate(countDownDate.getDate() + 3);
+            
+            // Actualizar el contador cada segundo
+            const countdownFunction = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+                
+                // Cálculos de tiempo
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                // Mostrar el resultado
+                document.getElementById("days").textContent = days.toString().padStart(2, '0');
+                document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+                
+                // Si el contador termina
+                if (distance < 0) {
+                    clearInterval(countdownFunction);
+                    document.querySelector(".countdown").innerHTML = "¡La oferta ha expirado!";
+                }
+            }, 1000);
+        }
+
+        // Función para filtrar productos por categoría
+        function filterProducts(category) {
+            // En una implementación real, aquí filtrarías los productos
+            // Por ahora, simplemente desplázate a la sección de productos
+            scrollToSection('products');
+            showNotification(`Mostrando productos de ${category}`);
+        }
+
+        // Función para procesar el pago (redirige a WhatsApp)
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Tu carrito está vacío');
+                return;
+            }
+            
+            // Crear mensaje para WhatsApp
+            let message = "¡Hola! Quiero realizar el siguiente pedido en AnimePets:%0A%0A";
+            
+            cart.forEach(item => {
+                message += `- ${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}%0A`;
+            });
+            
+            message += `%0ATotal: $${cartTotal.toFixed(2)}%0A%0A`;
+            message += "Mi nombre: [Por favor ingrese su nombre aquí]";
+            
+            // Número de WhatsApp (con código de país para Colombia)
+            const phoneNumber = "573166336246";
+            
+            // URL de WhatsApp
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${message}`;
+            
+            // Mostrar confirmación antes de redirigir
+            if (confirm('¿Estás seguro de que quieres proceder con el pedido? Serás redirigido a WhatsApp para completar la compra.')) {
+                // Limpiar carrito después de confirmación
+                cart = [];
+                cartCount = 0;
+                cartTotal = 0;
+                saveCartToStorage();
+                updateCartDisplay();
+                toggleCart();
+                
+                // Redirigir a WhatsApp
+                window.open(whatsappURL, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
