@@ -202,21 +202,6 @@
             gap: 1rem;
         }
 
-        .search-box {
-            padding: 0.5rem 1rem;
-            border: 2px solid var(--secondary-blue);
-            border-radius: 30px;
-            width: 200px;
-            transition: all 0.3s;
-            font-family: inherit;
-        }
-
-        .search-box:focus {
-            outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px rgba(167, 199, 231, 0.3);
-        }
-
         .cart-icon {
             background: var(--primary-blue);
             padding: 0.5rem;
@@ -856,10 +841,6 @@
                 gap: 0.5rem;
             }
             
-            .search-box {
-                width: 150px;
-            }
-            
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -915,7 +896,6 @@
                     <li><a href="#testimonials">Testimonios</a></li>
                 </ul>
                 <div class="header-actions">
-                    <input type="search" class="search-box" placeholder="Buscar productos...">
                     <div class="cart-icon" onclick="toggleCart()">
                         <i class="fa-solid fa-cart-shopping"></i>
                         <span class="cart-count">0</span>
@@ -1360,7 +1340,7 @@
                         </div>
                         <div class="cart-item-details">
                             <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-price">$${item.price.toLocaleString()} COP x ${item.quantity}</div>
+                            <div class="cart-item-price">${item.price.toLocaleString()} COP x ${item.quantity}</div>
                         </div>
                         <div class="cart-item-controls">
                             <button onclick="updateQuantity('${item.id}', -1)">-</button>
@@ -1474,10 +1454,10 @@
             let message = "¡Hola! Quiero realizar el siguiente pedido en AnimePets:%0A%0A";
             
             cart.forEach(item => {
-                message += `- ${item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString()} COP%0A`;
+                message += `- ${item.name} x${item.quantity} - ${(item.price * item.quantity).toLocaleString()} COP%0A`;
             });
             
-            message += `%0ATotal: $${cartTotal.toLocaleString()} COP%0A%0A`;
+            message += `%0ATotal: ${cartTotal.toLocaleString()} COP%0A%0A`;
             message += "Mi nombre: [Por favor ingrese su nombre aquí]";
             
             // Número de WhatsApp (con código de país para Colombia)
