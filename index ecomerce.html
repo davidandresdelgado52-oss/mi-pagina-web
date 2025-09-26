@@ -421,7 +421,7 @@
 
         .product-image {
             height: 200px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            background: var(--light-bg);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -429,20 +429,15 @@
             overflow: hidden;
         }
 
-        .product-image::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><defs><pattern id="stars" patternUnits="userSpaceOnUse" width="20" height="20"><circle cx="10" cy="10" r="1" fill="white"/><circle cx="3" cy="3" r="0.5" fill="white"/><circle cx="17" cy="17" r="0.5" fill="white"/></pattern></defs><rect width="100" height="100" fill="url(%23stars)"/></svg>');
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
         }
 
-        .product-image i {
-            font-size: 4rem;
-            color: white;
-            z-index: 1;
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
         }
 
         .product-info {
@@ -451,6 +446,13 @@
 
         .product-info h3 {
             font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-brand {
+            font-size: 0.9rem;
+            color: var(--dark-blue);
+            opacity: 0.7;
             margin-bottom: 0.5rem;
         }
 
@@ -722,12 +724,18 @@
         .cart-item-image {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            background: var(--light-bg);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            overflow: hidden;
+        }
+
+        .cart-item-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
         }
 
         .cart-item-details {
@@ -737,6 +745,12 @@
         .cart-item-title {
             font-weight: bold;
             margin-bottom: 0.2rem;
+        }
+
+        .cart-item-brand {
+            font-size: 0.8rem;
+            color: var(--dark-blue);
+            opacity: 0.7;
         }
 
         .cart-item-price {
@@ -957,19 +971,20 @@
         </div>
     </section>
 
-    <!-- Sección de Productos Destacados -->
+    <!-- Sección de Productos Destacados - SOLO CAMBIÉ LAS URLs DE LAS IMÁGENES -->
     <section class="featured-products" id="products">
         <div class="container">
             <h2 class="section-title">Productos Destacados</h2>
             <div class="products-grid">
-                <!-- Producto 1 -->
+                <!-- Producto 1 - Perros (Agility Gold) -->
                 <div class="product-card">
                     <div class="product-badge">Nuevo</div>
                     <div class="product-image">
-                        <i class="fa-solid fa-bone"></i>
+                        <img src="https://www.agrocampo.com.co/media/catalog/product/cache/dd0974c17aa11c1008feb0c4f8e4080c/1/1/111101830-v1-min.jpg" alt="Agility Gold para Perros">
                     </div>
                     <div class="product-info">
                         <h3>Croquetas Premium para Perros</h3>
+                        <div class="product-brand">Agility Gold</div>
                         <div class="product-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -977,22 +992,23 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
                         </div>
-                        <p class="product-price">$24.99</p>
-                        <p>Alimento balanceado con sabor a pollo y vegetales</p>
-                        <button class="add-to-cart" onclick="addToCart('Croquetas Premium para Perros', 24.99, 'perros')">
+                        <p class="product-price">$89.900 COP</p>
+                        <p>Alimento balanceado con sabor a pollo y vegetales para razas medianas y grandes</p>
+                        <button class="add-to-cart" onclick="addToCart('Croquetas Premium para Perros - Agility Gold', 89900, 'perros', 'https://www.agrocampo.com.co/media/catalog/product/cache/dd0974c17aa11c1008feb0c4f8e4080c/1/1/111101830-v1-min.jpg')">
                             <i class="fas fa-cart-plus"></i> Añadir al Carrito
                         </button>
                     </div>
                 </div>
 
-                <!-- Producto 2 -->
+                <!-- Producto 2 - Gatos (Pro Plan) -->
                 <div class="product-card">
                     <div class="product-badge">Oferta</div>
                     <div class="product-image">
-                        <i class="fa-solid fa-cat"></i>
+                        <img src="https://www.supermascotas.com.co/cdn/shop/files/7891000246429_1.webp?crop=center&height=740&v=1754940543&width=740" alt="Pro Plan para Gatos">
                     </div>
                     <div class="product-info">
                         <h3>Comida Húmeda para Gatos</h3>
+                        <div class="product-brand">Pro Plan</div>
                         <div class="product-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -1000,21 +1016,22 @@
                             <i class="fas fa-star"></i>
                             <i class="far fa-star"></i>
                         </div>
-                        <p class="product-price">$18.99</p>
-                        <p>Sabor a pescado y atún, con vitaminas esenciales</p>
-                        <button class="add-to-cart" onclick="addToCart('Comida Húmeda para Gatos', 18.99, 'gatos')">
+                        <p class="product-price">$65.500 COP</p>
+                        <p>Sabor a pescado y atún, con vitaminas esenciales para gatos adultos</p>
+                        <button class="add-to-cart" onclick="addToCart('Comida Húmeda para Gatos - Pro Plan', 65500, 'gatos', 'https://www.supermascotas.com.co/cdn/shop/files/7891000246429_1.webp?crop=center&height=740&v=1754940543&width=740')">
                             <i class="fas fa-cart-plus"></i> Añadir al Carrito
                         </button>
                     </div>
                 </div>
 
-                <!-- Producto 3 -->
+                <!-- Producto 3 - Aves (Beaphar) - NUEVA URL -->
                 <div class="product-card">
                     <div class="product-image">
-                        <i class="fa-solid fa-dove"></i>
+                        <img src="https://d7rh5s3nxmpy4.cloudfront.net/CMP9365/1/8711231201426.jpg" alt="Beaphar Semillas para Aves">
                     </div>
                     <div class="product-info">
                         <h3>Mezcla de Semillas para Aves</h3>
+                        <div class="product-brand">Beaphar</div>
                         <div class="product-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -1022,22 +1039,23 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                         </div>
-                        <p class="product-price">$12.99</p>
-                        <p>Mezcla nutritiva para canarios, periquitos y más</p>
-                        <button class="add-to-cart" onclick="addToCart('Mezcla de Semillas para Aves', 12.99, 'aves')">
+                        <p class="product-price">$32.800 COP</p>
+                        <p>Mezcla nutritiva para canarios, periquitos y más con semillas de frutas</p>
+                        <button class="add-to-cart" onclick="addToCart('Mezcla de Semillas para Aves - Beaphar', 32800, 'aves', 'https://d7rh5s3nxmpy4.cloudfront.net/CMP9365/1/8711231201426.jpg')">
                             <i class="fas fa-cart-plus"></i> Añadir al Carrito
                         </button>
                     </div>
                 </div>
 
-                <!-- Producto 4 -->
+                <!-- Producto 4 - Roedores (Deli Nature) - NUEVA URL -->
                 <div class="product-card">
                     <div class="product-badge">Más Vendido</div>
                     <div class="product-image">
-                        <i class="fa-solid fa-otter"></i>
+                        <img src="https://espirituanimal.com/1615-large_default/mixtura-para-conejos-enanos-sensitive-menu-5-delinature-25-kg-.jpg" alt="Deli Nature para Roedores">
                     </div>
                     <div class="product-info">
                         <h3>Alimento para Hámsters y Conejos</h3>
+                        <div class="product-brand">Deli Nature</div>
                         <div class="product-rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -1045,9 +1063,9 @@
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star-half-alt"></i>
                         </div>
-                        <p class="product-price">$14.99</p>
-                        <p>Completa nutrición para roedores pequeños</p>
-                        <button class="add-to-cart" onclick="addToCart('Alimento para Hámsters y Conejos', 14.99, 'roedores')">
+                        <p class="product-price">$45.200 COP</p>
+                        <p>Completa nutrición para roedores pequeños con mezcla balanceada</p>
+                        <button class="add-to-cart" onclick="addToCart('Alimento para Hámsters y Conejos - Deli Nature', 45200, 'roedores', 'https://espirituanimal.com/1615-large_default/mixtura-para-conejos-enanos-sensitive-menu-5-delinature-25-kg-.jpg')">
                             <i class="fas fa-cart-plus"></i> Añadir al Carrito
                         </button>
                     </div>
@@ -1189,7 +1207,7 @@
             <!-- Los elementos del carrito se añadirán aquí dinámicamente -->
         </div>
         <div class="cart-total">
-            Total: $<span id="cartTotal">0.00</span>
+            Total: $<span id="cartTotal">0.00</span> COP
         </div>
         <button class="checkout-btn" onclick="checkout()">Proceder al Pago</button>
     </div>
@@ -1243,7 +1261,7 @@
         }
 
         // Función para añadir productos al carrito
-        function addToCart(productName, price, category) {
+        function addToCart(productName, price, category, imageUrl) {
             // Crear un ID único para el producto
             const productId = productName.replace(/\s+/g, '-').toLowerCase();
             
@@ -1258,6 +1276,7 @@
                     name: productName,
                     price: price,
                     category: category,
+                    imageUrl: imageUrl,
                     quantity: 1
                 });
             }
@@ -1337,11 +1356,11 @@
                 cartItemsElement.innerHTML = cart.map(item => `
                     <div class="cart-item">
                         <div class="cart-item-image">
-                            <i class="fa-solid fa-${getIconByCategory(item.category)}"></i>
+                            <img src="${item.imageUrl}" alt="${item.name}">
                         </div>
                         <div class="cart-item-details">
                             <div class="cart-item-title">${item.name}</div>
-                            <div class="cart-item-price">$${item.price} x ${item.quantity}</div>
+                            <div class="cart-item-price">$${item.price.toLocaleString()} COP x ${item.quantity}</div>
                         </div>
                         <div class="cart-item-controls">
                             <button onclick="updateQuantity('${item.id}', -1)">-</button>
@@ -1356,18 +1375,7 @@
             }
             
             // Actualizar el total
-            cartTotalElement.textContent = cartTotal.toFixed(2);
-        }
-
-        // Función para obtener el icono según la categoría
-        function getIconByCategory(category) {
-            switch(category) {
-                case 'perros': return 'dog';
-                case 'gatos': return 'cat';
-                case 'aves': return 'dove';
-                case 'roedores': return 'otter';
-                default: return 'paw';
-            }
+            cartTotalElement.textContent = cartTotal.toLocaleString();
         }
 
         // Función para mostrar notificaciones
@@ -1466,10 +1474,10 @@
             let message = "¡Hola! Quiero realizar el siguiente pedido en AnimePets:%0A%0A";
             
             cart.forEach(item => {
-                message += `- ${item.name} x${item.quantity} - $${(item.price * item.quantity).toFixed(2)}%0A`;
+                message += `- ${item.name} x${item.quantity} - $${(item.price * item.quantity).toLocaleString()} COP%0A`;
             });
             
-            message += `%0ATotal: $${cartTotal.toFixed(2)}%0A%0A`;
+            message += `%0ATotal: $${cartTotal.toLocaleString()} COP%0A%0A`;
             message += "Mi nombre: [Por favor ingrese su nombre aquí]";
             
             // Número de WhatsApp (con código de país para Colombia)
